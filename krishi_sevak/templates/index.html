@@ -1,0 +1,329 @@
+<!--! DOCTYPE declaration: Defines this document as HTML5 -->
+<!doctype html>
+
+<!-- Root HTML element with language set to English -->
+<html lang="en">
+<head>
+    <!-- Character encoding: UTF-8 supports all languages including Indian scripts -->
+    <meta charset="utf-8">
+
+    <!-- Viewport meta tag: Ensures responsive design on mobile devices -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Page title shown in browser tab -->
+    <title>Krishi Sevak</title>
+
+    <!-- Theme color for mobile browsers (e.g., Android Chrome) -->
+    <meta name="theme-color" content="#2e7d32">
+
+    <!-- Link to PWA manifest file (enables installable app experience) -->
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Load Inter font from Google Fonts for clean UI typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Link to custom CSS file for styling the app -->
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<!-- Body with initial light theme; data-theme used for theme switching via JS/CSS -->
+<body data-theme="light">
+
+    <!-- Header section containing app title and top-right action buttons -->
+    <header>
+        <!-- App logo/title -->
+        <h1>Krishi Sevak</h1>
+
+        <!-- Container for quick action buttons -->
+        <div class="top-actions">
+            <!-- Button to toggle between light/dark mode (🌙 = dark, ☀️ = light) -->
+            <button id="themeToggle">🌙</button>
+
+            <!-- Button to open voice input (uses browser's Web Speech API) -->
+            <button id="openVoice">🎤</button>
+
+            <!-- Button to reload the page -->
+            <button onclick="location.reload()">↻</button>
+        </div>
+    </header>
+
+    <!-- Main container wrapping the grid layout -->
+    <div class="container">
+        <!-- Grid layout for sidebar + content -->
+        <div class="grid">
+
+            <!-- Sidebar navigation menu -->
+            <aside class="sidebar">
+                <!-- Card wrapper for visual grouping -->
+                <div class="card">
+                    <!-- Navigation links -->
+                    <nav>
+                        <!-- Dashboard (active by default) -->
+                        <a href="#" id="nav-dashboard" class="active" onclick="showSection('dashboard')">Dashboard</a>
+
+                        <!-- Crop Recommendation -->
+                        <a href="#" id="nav-recommend" onclick="showSection('recommend')">Crop Recommendation</a>
+
+                        <!-- Disease Detection -->
+                        <a href="#" id="nav-detect" onclick="showSection('detect')">Disease Detection</a>
+
+                        <!-- Weather Info -->
+                        <a href="#" id="nav-weather" onclick="showSection('weather')">Weather</a>
+
+                        <!-- Mandi Prices -->
+                        <a href="#" id="nav-mandi" onclick="showSection('mandi')">Mandi Prices</a>
+
+                        <!-- Crop Information Lookup -->
+                        <a href="#" id="nav-cropinfo" onclick="showSection('cropinfo')">Crop Information</a>
+
+                        <!-- Fertilizer Recommendation -->
+                        <a href="#" id="nav-fertilizer" onclick="showSection('fertilizer')">Fertilizer</a>
+
+                        <!-- AI Chat Assistant -->
+                        <a href="#" id="nav-ai" onclick="showSection('ai')">AI Advice</a>
+                    </nav>
+                </div>
+
+                <!-- Version info at bottom of sidebar -->
+                <div class="muted">
+                    <small>Version 2.0</small>
+                </div>
+            </aside>
+
+            <!-- Main content area where dynamic sections are shown -->
+            <main class="content">
+
+                <!-- === SECTION: DASHBOARD === -->
+                <section id="section-dashboard" class="card">
+                    <!-- Welcome message -->
+                    <h2>Welcome to Krishi Sevak</h2>
+                    <!-- Instructions for user -->
+                    <p class="muted">Use the left menu to navigate features. Voice assistant uses your browser's microphone.</p>
+
+                    <!-- Quick actions and status cards in a responsive flex layout -->
+                    <div style="display:flex;gap:12px;margin-top:12px;flex-wrap:wrap">
+                        <!-- Quick action card: Get crop recommendation -->
+                        <div class="card" style="flex:1;min-width:220px">
+                            <strong>Quick Actions</strong>
+                            <div style="margin-top:8px">
+                                <!-- Button that switches to crop recommendation section -->
+                                <button onclick="showSection('recommend')">Get Crop Recommendation</button>
+                            </div>
+                        </div>
+
+                        <!-- Status card: Shows real-time system status (filled via JS) -->
+                        <div class="card" style="flex:1;min-width:220px">
+                            <strong>Status</strong>
+                            <div id="quick-status" style="margin-top:8px" class="muted">Loading...</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- === SECTION: CROP RECOMMENDATION === -->
+                <section id="section-recommend" class="card" style="display:none">
+                    <h2>Crop Recommendation</h2>
+                    <!-- Form to collect soil type and season -->
+                    <form id="recommend-form">
+                        <div class="row">
+                            <!-- Soil type dropdown -->
+                            <div>
+                                <label>Soil Type</label>
+                                <select name="soil" required>
+                                    <option value="">Select soil type</option>
+                                    <option value="clay">Clay</option>
+                                    <option value="sandy">Sandy</option>
+                                    <option value="loamy">Loamy</option>
+                                </select>
+                            </div>
+                            <!-- Season dropdown -->
+                            <div>
+                                <label>Season</label>
+                                <select name="season" required>
+                                    <option value="">Select season</option>
+                                    <option value="kharif">Kharif</option>
+                                    <option value="rabi">Rabi</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Submit button -->
+                        <button type="submit">Get Recommendation</button>
+                    </form>
+                    <!-- Area to display recommendation result (filled via JS) -->
+                    <div id="recommend-result" class="result-area"></div>
+                </section>
+
+                <!-- === SECTION: DISEASE DETECTION === -->
+                <section id="section-detect" class="card" style="display:none">
+                    <h2>Crop Disease Detection</h2>
+                    <div>
+                        <!-- Label for image upload -->
+                        <label>Upload Leaf Image</label>
+                        <!-- File input for selecting an image -->
+                        <input type="file" accept="image/*" id="disease-image">
+                        <!-- Preview area for uploaded image -->
+                        <div id="image-preview" class="img-preview"></div>
+                        <!-- Button to trigger disease detection (calls JS function) -->
+                        <button onclick="detectDisease()">Analyze Image</button>
+                    </div>
+                    <!-- Result area for disease detection output -->
+                    <div id="detect-result" class="result-area"></div>
+                </section>
+
+                    <!-- Weather Section -->
+                <section id="section-weather" class="card" style="display:none">
+                    <h2>Weather Information</h2>
+                    
+                <!-- City Selection -->
+                <div style="margin-bottom: 16px;">
+                    <label for="city-select">Select City</label>
+                    <select id="city-select" onchange="loadWeatherData(this.value)">
+                        <option value="Agra" selected>Agra</option>
+                        <option value="Delhi">Delhi</option>
+                        <option value="Mumbai">Mumbai</option>
+                        <option value="Bengaluru">Bengaluru</option>
+                        <option value="Chennai">Chennai</option>
+                        <option value="Kolkata">Kolkata</option>
+                        <option value="Hyderabad">Hyderabad</option>
+                        <option value="Pune">Pune</option>
+                    </select>
+                </div>
+
+                <div id="weather-data">
+                    <div class="row" style="align-items: center;">
+                        <div style="flex:1">
+                            <h3 id="weather-city">Agra</h3>
+                            <div style="font-size: 2em; font-weight: 500;" id="weather-temp">--°C</div>
+                            <div id="weather-condition">Loading...</div>
+                        </div>
+                    </div>
+                    <div style="margin-top:16px">
+                        <h4>Forecast</h4>
+                        <div id="forecast-container" style="display: flex; gap: 12px; overflow-x: auto; padding: 8px 0;"></div>
+                    </div>
+                </div>
+                </section>
+
+
+                <!-- === SECTION: MANDI PRICES === -->
+                <section id="section-mandi" class="card" style="display:none">
+                    <h2>Mandi Prices</h2>
+                    
+                    <!-- Show total number of cities and source -->
+                    <div id="mandi-location" class="muted">Data from 10 major cities | <span class="source">AGMARKNET</span></div>
+                    
+                    <!-- Table for commodity prices -->
+                    <div style="margin-top:16px">
+                        <table style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Commodity</th>
+                                    <th>City</th>
+                                    <th>Price (₹)</th>
+                                    <th>Unit</th>
+                                    <th>Variety</th>
+                                </tr>
+                            </thead>
+                            <!-- Table body populated via JavaScript -->
+                            <tbody id="mandi-prices">
+                                <tr><td colspan="5">Loading...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- === SECTION: CROP INFORMATION === -->
+                <section id="section-cropinfo" class="card" style="display:none">
+                    <h2>Crop Information</h2>
+                    <div>
+                        <label>Select Crop</label>
+                        <!-- Dropdown to choose crop for detailed info -->
+                        <select id="crop-select" onchange="showCropInfo()">
+                            <option value="">Select a crop</option>
+                            <option value="wheat">Wheat</option>
+                            <option value="rice">Rice</option>
+                            <option value="corn">Corn</option>
+                            <option value="sugarcane">Sugarcane</option>
+                            <option value="cotton">Cotton</option>
+                            <option value="soybean">Soybean</option>
+                            <option value="mustard">Mustard</option>
+                            <option value="groundnut">Groundnut</option>
+                            <option value="potato">Potato</option>
+                            <option value="tomato">Tomato</option>
+                            <option value="onion">Onion</option>
+                            <option value="chilli">Chilli</option>
+                            <option value="brinjal">Brinjal</option>
+                            <option value="cabbage">Cabbage</option>
+                            <option value="cauliflower">Cauliflower</option>
+                            <option value="carrot">Carrot</option>
+                            <option value="beetroot">Beetroot</option>
+                            <option value="radish">Radish</option>
+                            <option value="bittergourd">Bitter Gourd</option>
+                            <option value="papaya">Papaya</option>
+                        </select>
+                    </div>
+                    <!-- Area to display detailed crop info -->
+                    <div id="crop-info" style="margin-top:16px"></div>
+                </section>
+
+                <!-- === SECTION: FERTILIZER RECOMMENDATION === -->
+                <section id="section-fertilizer" class="card" style="display:none">
+                    <h2>Fertilizer Recommendation</h2>
+                    <!-- Form to select crop and get fertilizer advice -->
+                    <form id="fertilizer-form">
+                        <div>
+                            <label>Selected Crop</label>
+                            <select name="crop" required>
+                                <option value="wheat">Wheat</option>
+                                <option value="rice">Rice</option>
+                                <option value="corn">Corn</option>
+                                <option value="sugarcane">Sugarcane</option>
+                                <option value="cotton">Cotton</option>
+                                <option value="soybean">Soybean</option>
+                                <option value="mustard">Mustard</option>
+                                <option value="groundnut">Groundnut</option>
+                                <option value="potato">Potato</option>
+                                <option value="tomato">Tomato</option>
+                                <option value="onion">Onion</option>
+                                <option value="chilli">Chilli</option>
+                                <option value="brinjal">Brinjal</option>
+                                <option value="cabbage">Cabbage</option>
+                                <option value="cauliflower">Cauliflower</option>
+                                <option value="carrot">Carrot</option>
+                                <option value="beetroot">Beetroot</option>
+                                <option value="radish">Radish</option>
+                                <option value="bittergourd">Bitter Gourd</option>
+                                <option value="papaya">Papaya</option>
+
+
+                            </select>
+                        </div>
+                        <button type="submit">Get Recommendation</button>
+                    </form>
+                    <!-- Result area for fertilizer advice -->
+                    <div id="fertilizer-result" class="result-area"></div>
+                </section>
+
+                <!-- === SECTION: AI FARMING ASSISTANT (CHATBOT) === -->
+                <section id="section-ai" class="card" style="display:none">
+                    <h2>AI Farming Assistant</h2>
+                    <!-- Chat history display area with scroll support -->
+                    <div style="background: var(--background); border-radius: 8px; padding: 12px; min-height: 200px; max-height: 300px; overflow-y: auto;" id="chat-history"></div>
+                    <!-- Input area for user queries -->
+                    <div style="display: flex; gap: 8px; margin-top: 12px;">
+                        <input type="text" id="chat-input" placeholder="Ask about farming, weather, prices..." style="flex:1; padding: 10px; border-radius: 8px; border: 1px solid var(--border);">
+                        <!-- Button to send message -->
+                        <button onclick="sendChatMessage()" style="min-width: 80px;">Send</button>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- Footer with copyright and mission statement -->
+    <footer>© 2025 Krishi Sevak • Empowering Indian farmers with technology</footer>
+
+    <!-- Link to main JavaScript file (handles UI logic, API calls, etc.) -->
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

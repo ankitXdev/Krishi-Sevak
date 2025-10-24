@@ -1,0 +1,379 @@
+/* === Keep all your existing :root and [data-theme="dark"] === */
+:root {
+    --primary: #2e7d32;
+    --primary-dark: #1b5e20;
+    --secondary: #fb8c00;
+    --background: #f6fff6;
+    --surface: #ffffff;
+    --text-primary: #1a1a1a;
+    --text-secondary: #666666;
+    --border: #dddddd;
+    --shadow: 0 6px 18px rgba(46, 125, 50, 0.08);
+    --success: #4caf50;
+    --warning: #ff9800;
+    --error: #f44336;
+}
+
+[data-theme="dark"] {
+    --primary: #66bb6a;
+    --primary-dark: #388e3c;
+    --background: #0b1220;
+    --surface: #1a2430;
+    --text-primary: #e6f7e6;
+    --text-secondary: #aaaaaa;
+    --border: #333333;
+    --shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
+}
+
+/* === Base Reset & Typography === */
+* {
+    box-sizing: border-box;
+}
+
+/* Improved body with better spacing and transition */
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    margin: 0;
+    padding: 0 12px;
+    background: var(--background);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: background 0.3s, color 0.3s;
+}
+
+/* === Header: Modern App Bar === */
+header {
+    background: var(--primary);
+    color: white;
+    padding: 18px 20px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-radius: 12px 12px 0 0;
+}
+
+/* === Layout Container === */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 0;
+    flex: 1;
+    display: flex;
+}
+
+/* === Grid Layout === */
+.grid {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 18px;
+    width: 100%;
+}
+
+/* === Sidebar === */
+.sidebar {
+    background: var(--surface);
+    border-radius: 12px;
+    padding: 12px;
+    box-shadow: var(--shadow);
+    height: calc(100vh - 90px);
+    position: sticky;
+    top: 78px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) var(--surface);
+    border: 1px solid var(--border);
+}
+
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: var(--surface);
+    border-radius: 10px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background-color: var(--border);
+    border-radius: 10px;
+}
+
+/* Sidebar Nav Links */
+.sidebar nav a {
+    display: block;
+    padding: 12px 14px;
+    border-radius: 8px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    margin-bottom: 4px;
+    transition: all 0.2s ease;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-left: 3px solid transparent;
+}
+
+.sidebar nav a:hover {
+    background: rgba(46, 125, 50, 0.08);
+    color: var(--primary);
+}
+
+.sidebar nav a.active {
+    background: rgba(46, 125, 50, 0.08);
+    color: var(--primary);
+    font-weight: 600;
+    border-left: 3px solid var(--primary);
+}
+
+/* === Content & Cards === */
+.content {
+    display: flex;
+    flex-direction: column;
+}
+
+.card {
+    background: var(--surface);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin-bottom: 16px;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(46, 125, 50, 0.12);
+}
+
+/* === Headings === */
+.card h2 {
+    color: var(--primary);
+    font-size: 1.4rem;
+    margin-bottom: 16px;
+    font-weight: 600;
+    border-bottom: 2px solid var(--primary);
+    padding-bottom: 8px;
+}
+
+/* === Form Elements === */
+label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+    display: block;
+    color: var(--text-primary);
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    font-size: 1rem;
+    background: var(--surface);
+    color: var(--text-primary);
+    transition: all 0.2s ease;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.08);
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.2);
+    transform: translateY(-1px);
+}
+
+/* === Button === */
+button {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    font-size: 0.95rem;
+    min-width: 100px;
+}
+
+button:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(27, 94, 32, 0.2);
+}
+
+/* === Row Layout === */
+.row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+    align-items: flex-start;
+}
+
+.row > div {
+    flex: 1;
+}
+
+/* Responsive: Stack on small screens */
+@media (max-width: 600px) {
+    .row {
+        flex-direction: column;
+        gap: 12px;
+    }
+}
+
+/* === Result Area === */
+.result-area {
+    min-height: 120px;
+    margin-top: 16px;
+    padding: 16px;
+    background: rgba(46, 125, 50, 0.08);
+    border-radius: 12px;
+    border-left: 5px solid var(--primary);
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    transition: all 0.2s ease;
+}
+
+/* === Image Preview === */
+.img-preview {
+    max-width: 280px;
+    margin-top: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: #f9f9f9;
+    text-align: center;
+    padding: 12px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.img-preview img {
+    width: 100%;
+    border-radius: 8px;
+    display: block;
+    margin-bottom: 8px;
+}
+
+/* === Text Styles === */
+.muted {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.small {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+/* === Footer === */
+footer {
+    padding: 16px;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    border-top: 1px solid var(--border);
+    margin-top: auto;
+    background: var(--surface);
+}
+
+/* === Tables === */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 12px;
+    font-size: 0.95rem;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s;
+}
+
+th {
+    background: rgba(46, 125, 50, 0.08);
+    font-weight: 600;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+tr:hover {
+    background: rgba(46, 125, 50, 0.04);
+}
+
+/* === Forecast Items === */
+.forecast-item {
+    min-width: 100px;
+    padding: 14px;
+    background: rgba(46, 125, 50, 0.08);
+    border-radius: 10px;
+    text-align: center;
+    font-size: 0.92rem;
+    border: 1px solid var(--border);
+    transition: transform 0.2s;
+}
+
+.forecast-item:hover {
+    transform: translateY(-2px);
+    background: rgba(46, 125, 50, 0.12);
+}
+
+/* === Spinner === */
+.spinner {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 3px solid rgba(0, 0, 0, 0.12);
+    border-radius: 50%;
+    border-top-color: var(--primary);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* === Responsive Layout === */
+@media (max-width: 900px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+    .sidebar {
+        order: 2;
+        height: auto;
+        position: static;
+        max-height: none;
+    }
+    .container {
+        padding: 16px;
+    }
+    .card {
+        padding: 16px;
+        border-radius: 12px;
+    }
+    header {
+        padding: 14px 16px;
+        font-size: 1.1em;
+    }
+    .row {
+        flex-direction: column;
+        gap: 12px;
+    }
+}
