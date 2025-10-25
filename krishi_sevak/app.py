@@ -5,11 +5,17 @@ import requests
 from datetime import datetime
 from flask import Flask, request, jsonify
 import requests
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+token = os.getenv('HUGGING_FACE_TOKEN')
 
 app = Flask(__name__)
 
 API_URL = "https://api-inference.huggingface.co/models/meta-llama/Meta-Llama-3-8B-Instruct"
-HEADERS = {"Authorization": "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"}  
+HEADERS = {"Authorization": f"Bearer {token}"}
 
 # Configuration
 UPLOAD_FOLDER = 'static/images/uploads'
