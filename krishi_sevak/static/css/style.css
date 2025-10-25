@@ -1,379 +1,581 @@
-/* === Keep all your existing :root and [data-theme="dark"] === */
+/* ========================================
+   KRISHI SEVAK - PROFESSIONAL STYLESHEET
+   Version: 2.0
+   Description: Complete styling for agricultural platform
+   Last Updated: October 2025
+======================================== */
+
+/* ========================================
+   CSS VARIABLES (DESIGN TOKENS)
+   Edit these to change the entire theme
+======================================== */
 :root {
-    --primary: #2e7d32;
-    --primary-dark: #1b5e20;
-    --secondary: #fb8c00;
-    --background: #f6fff6;
-    --surface: #ffffff;
-    --text-primary: #1a1a1a;
-    --text-secondary: #666666;
-    --border: #dddddd;
-    --shadow: 0 6px 18px rgba(46, 125, 50, 0.08);
-    --success: #4caf50;
-    --warning: #ff9800;
-    --error: #f44336;
+    /* === PRIMARY COLORS === */
+    --primary-green: #2e7d32;
+    --primary-green-dark: #1b5e20;
+    --primary-green-light: #4caf50;
+    
+    /* === ACCENT COLORS === */
+    --accent-orange: #ff9800;
+    --accent-blue: #2196f3;
+    
+    /* === BACKGROUND GRADIENTS === */
+    --bg-gradient-start: #f5f7fa;
+    --bg-gradient-end: #e8f5e9;
+    
+    /* === SHADOWS === */
+    --card-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    --card-shadow-hover: 0 4px 16px rgba(0,0,0,0.12);
 }
 
-[data-theme="dark"] {
-    --primary: #66bb6a;
-    --primary-dark: #388e3c;
-    --background: #0b1220;
-    --surface: #1a2430;
-    --text-primary: #e6f7e6;
-    --text-secondary: #aaaaaa;
-    --border: #333333;
-    --shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
-}
-
-/* === Base Reset & Typography === */
-* {
-    box-sizing: border-box;
-}
-
-/* Improved body with better spacing and transition */
+/* ========================================
+   BODY & GLOBAL STYLES
+======================================== */
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    margin: 0;
-    padding: 0 12px;
-    background: var(--background);
-    color: var(--text-primary);
-    line-height: 1.6;
+    background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    transition: background 0.3s, color 0.3s;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
-/* === Header: Modern App Bar === */
+/* ========================================
+   HEADER SECTION
+   Top navigation bar with logo and actions
+======================================== */
 header {
-    background: var(--primary);
-    color: white;
-    padding: 18px 20px;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-dark) 100%);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    padding: 1.5rem 2rem;
     position: sticky;
     top: 0;
     z-index: 100;
-    border-radius: 12px 12px 0 0;
 }
 
-/* === Layout Container === */
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 24px 0;
-    flex: 1;
-    display: flex;
-}
-
-/* === Grid Layout === */
-.grid {
-    display: grid;
-    grid-template-columns: 300px 1fr;
-    gap: 18px;
-    width: 100%;
-}
-
-/* === Sidebar === */
-.sidebar {
-    background: var(--surface);
-    border-radius: 12px;
-    padding: 12px;
-    box-shadow: var(--shadow);
-    height: calc(100vh - 90px);
-    position: sticky;
-    top: 78px;
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: var(--border) var(--surface);
-    border: 1px solid var(--border);
-}
-
-.sidebar::-webkit-scrollbar {
-    width: 6px;
-}
-
-.sidebar::-webkit-scrollbar-track {
-    background: var(--surface);
-    border-radius: 10px;
-}
-
-.sidebar::-webkit-scrollbar-thumb {
-    background-color: var(--border);
-    border-radius: 10px;
-}
-
-/* Sidebar Nav Links */
-.sidebar nav a {
-    display: block;
-    padding: 12px 14px;
-    border-radius: 8px;
-    color: var(--text-secondary);
-    text-decoration: none;
-    margin-bottom: 4px;
-    transition: all 0.2s ease;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    border-left: 3px solid transparent;
-}
-
-.sidebar nav a:hover {
-    background: rgba(46, 125, 50, 0.08);
-    color: var(--primary);
-}
-
-.sidebar nav a.active {
-    background: rgba(46, 125, 50, 0.08);
-    color: var(--primary);
-    font-weight: 600;
-    border-left: 3px solid var(--primary);
-}
-
-/* === Content & Cards === */
-.content {
-    display: flex;
-    flex-direction: column;
-}
-
-.card {
-    background: var(--surface);
-    border-radius: 16px;
-    padding: 20px;
-    box-shadow: var(--shadow);
-    border: 1px solid var(--border);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    margin-bottom: 16px;
-}
-
-.card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(46, 125, 50, 0.12);
-}
-
-/* === Headings === */
-.card h2 {
-    color: var(--primary);
-    font-size: 1.4rem;
-    margin-bottom: 16px;
-    font-weight: 600;
-    border-bottom: 2px solid var(--primary);
-    padding-bottom: 8px;
-}
-
-/* === Form Elements === */
-label {
-    font-weight: 600;
-    font-size: 0.9rem;
-    margin-bottom: 6px;
-    display: block;
-    color: var(--text-primary);
-}
-
-input, select, textarea {
-    width: 100%;
-    padding: 12px;
-    border-radius: 10px;
-    border: 1px solid var(--border);
-    font-size: 1rem;
-    background: var(--surface);
-    color: var(--text-primary);
-    transition: all 0.2s ease;
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.08);
-}
-
-input:focus, select:focus, textarea:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.2);
-    transform: translateY(-1px);
-}
-
-/* === Button === */
-button {
-    background: var(--primary);
+header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin: 0;
     color: white;
-    border: none;
-    padding: 12px 18px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: all 0.2s ease;
-    font-size: 0.95rem;
-    min-width: 100px;
 }
 
-button:hover {
-    background: var(--primary-dark);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(27, 94, 32, 0.2);
-}
-
-/* === Row Layout === */
-.row {
-    display: flex;
-    gap: 16px;
-    margin-bottom: 16px;
-    align-items: flex-start;
-}
-
-.row > div {
-    flex: 1;
-}
-
-/* Responsive: Stack on small screens */
-@media (max-width: 600px) {
-    .row {
-        flex-direction: column;
-        gap: 12px;
-    }
-}
-
-/* === Result Area === */
-.result-area {
-    min-height: 120px;
-    margin-top: 16px;
-    padding: 16px;
-    background: rgba(46, 125, 50, 0.08);
+/* ========================================
+   HERO SECTION (Dashboard Welcome Banner)
+   Large banner on dashboard with gradient
+======================================== */
+.hero-section {
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-dark) 100%);
     border-radius: 12px;
-    border-left: 5px solid var(--primary);
-    color: var(--text-primary);
+    padding: 2.5rem;
+    color: white;
+    margin-bottom: 2rem;
+    box-shadow: var(--card-shadow-hover);
+}
+
+.hero-section h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.hero-section p {
+    opacity: 0.9;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+/* ========================================
+   FEATURE CARDS GRID
+   6 main feature cards on dashboard
+======================================== */
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.feature-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: var(--card-shadow);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+/* Feature Card Hover Effect */
+.feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--card-shadow-hover);
+    border-color: var(--primary-green-light);
+}
+
+/* Feature Card Icon Styling */
+.feature-card .icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+/* Feature Card Title */
+.feature-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--primary-green-dark);
+}
+
+/* Feature Card Description */
+.feature-card p {
+    color: #666;
     font-size: 0.95rem;
     line-height: 1.5;
-    transition: all 0.2s ease;
+    margin: 0;
 }
 
-/* === Image Preview === */
-.img-preview {
-    max-width: 280px;
-    margin-top: 10px;
-    border-radius: 10px;
+/* ========================================
+   PRIORITY SECTION STYLING
+   Green left border for important sections
+======================================== */
+.priority-section {
+    border-left: 4px solid var(--primary-green);
+    padding-left: 1rem;
+}
+
+/* ========================================
+   FORM STYLES
+   All forms across the platform
+======================================== */
+form {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+}
+
+/* Form Labels */
+form label {
+    font-weight: 600;
+    color: var(--primary-green-dark);
+    margin-bottom: 0.5rem;
+    display: block;
+    font-size: 0.95rem;
+}
+
+/* Form Select Dropdowns and File Inputs */
+form select,
+form input[type="file"] {
+    width: 100%;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 0.75rem;
+    transition: border-color 0.3s ease;
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+/* Form Input Focus State */
+form select:focus,
+form input[type="file"]:focus {
+    border-color: var(--primary-green);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+}
+
+/* Form Submit Buttons */
+form button[type="submit"] {
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-dark) 100%);
+    color: white;
+    padding: 0.875rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 1rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    font-size: 1rem;
+}
+
+/* Submit Button Hover Effect */
+form button[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+}
+
+/* Submit Button Active State */
+form button[type="submit"]:active {
+    transform: translateY(0);
+}
+
+/* ========================================
+   RESULT AREAS
+   Display areas for API responses
+======================================== */
+.result-area {
+    background: #f9fafb;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+    border-left: 4px solid var(--accent-blue);
+    min-height: 50px;
+}
+
+/* ========================================
+   TABLE STYLES
+   Mandi prices and data tables
+======================================== */
+table {
+    width: 100%;
+    background: white;
+    border-radius: 8px;
     overflow: hidden;
-    border: 1px solid var(--border);
-    background: #f9f9f9;
+    box-shadow: var(--card-shadow);
+    border-collapse: collapse;
+}
+
+/* Table Header */
+table thead {
+    background: var(--primary-green);
+    color: white;
+}
+
+/* Table Header Cells */
+table th {
+    padding: 1rem;
+    font-weight: 600;
+    text-align: left;
+    font-size: 0.95rem;
+}
+
+/* Table Data Cells */
+table td {
+    padding: 1rem;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 0.95rem;
+}
+
+/* Table Row Hover Effect */
+table tbody tr:hover {
+    background: #f5f5f5;
+    transition: background 0.2s ease;
+}
+
+/* Last Row No Border */
+table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* ========================================
+   CHAT INTERFACE (AI Assistant)
+   Styling for chatbot section
+======================================== */
+#chat-history {
+    background: white !important;
+    border: 2px solid #e0e0e0;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+    border-radius: 12px;
+}
+
+/* Chat Input Box */
+#chat-input {
+    border: 2px solid #e0e0e0 !important;
+    padding: 0.75rem !important;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+/* Chat Input Focus State */
+#chat-input:focus {
+    border-color: var(--primary-green) !important;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+}
+
+/* ========================================
+   SIDEBAR NAVIGATION
+   Left sidebar menu
+======================================== */
+nav a {
+    display: block;
+    padding: 0.875rem 1rem;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+    border-radius: 4px;
+    margin-bottom: 0.25rem;
+}
+
+/* Navigation Link Hover */
+nav a:hover {
+    background: rgba(46, 125, 50, 0.05);
+    border-left-color: var(--primary-green);
+    padding-left: 1.25rem;
+}
+
+/* Active Navigation Link */
+nav a.active {
+    background: rgba(46, 125, 50, 0.1);
+    border-left-color: var(--primary-green);
+    font-weight: 600;
+    color: var(--primary-green-dark);
+}
+
+/* ========================================
+   STATUS BADGES
+   Online/offline indicators
+======================================== */
+.status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* Online Status Badge */
+.status-badge.online {
+    background: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #4caf50;
+}
+
+/* Offline Status Badge (if needed) */
+.status-badge.offline {
+    background: #ffebee;
+    color: #c62828;
+    border: 1px solid #ef5350;
+}
+
+/* ========================================
+   WEATHER FORECAST CARDS
+   5-day forecast display
+======================================== */
+.forecast-card {
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
     text-align: center;
-    padding: 12px;
+    min-width: 120px;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.2s ease;
+}
+
+/* Forecast Card Hover */
+.forecast-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--card-shadow-hover);
+}
+
+/* ========================================
+   SECTION HEADERS
+   H2 headers for each section
+======================================== */
+section h2 {
+    color: var(--primary-green-dark);
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+/* ========================================
+   UTILITY CLASSES
+======================================== */
+
+/* Muted Text */
+.muted {
+    color: #666;
     font-size: 0.9rem;
-    color: var(--text-secondary);
+}
+
+/* Card Component */
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: var(--card-shadow);
+    margin-bottom: 1.5rem;
+}
+
+/* Container for Main Content */
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+/* Grid Layout for Sidebar + Content */
+.grid {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 2rem;
+}
+
+/* Content Area */
+.content {
+    min-height: 500px;
+}
+
+/* Sidebar */
+.sidebar {
+    position: sticky;
+    top: 100px;
+    height: fit-content;
+}
+
+/* Row Layout for Forms */
+.row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* Image Preview Area */
+.img-preview {
+    max-width: 100%;
+    max-height: 300px;
+    margin: 1rem 0;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 .img-preview img {
     width: 100%;
-    border-radius: 8px;
-    display: block;
-    margin-bottom: 8px;
+    height: auto;
+    object-fit: contain;
 }
 
-/* === Text Styles === */
-.muted {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
+/* ========================================
+   RESPONSIVE DESIGN
+   Mobile and tablet adjustments
+======================================== */
+
+/* Tablet View */
+@media (max-width: 1024px) {
+    .grid {
+        grid-template-columns: 240px 1fr;
+        gap: 1.5rem;
+    }
+    
+    .feature-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
 }
 
-.small {
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-}
-
-/* === Footer === */
-footer {
-    padding: 16px;
-    text-align: center;
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-    border-top: 1px solid var(--border);
-    margin-top: auto;
-    background: var(--surface);
-}
-
-/* === Tables === */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 12px;
-    font-size: 0.95rem;
-}
-
-th, td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid var(--border);
-    transition: background 0.2s;
-}
-
-th {
-    background: rgba(46, 125, 50, 0.08);
-    font-weight: 600;
-    color: var(--text-primary);
-    text-transform: uppercase;
-    font-size: 0.85rem;
-    letter-spacing: 0.5px;
-}
-
-tr:hover {
-    background: rgba(46, 125, 50, 0.04);
-}
-
-/* === Forecast Items === */
-.forecast-item {
-    min-width: 100px;
-    padding: 14px;
-    background: rgba(46, 125, 50, 0.08);
-    border-radius: 10px;
-    text-align: center;
-    font-size: 0.92rem;
-    border: 1px solid var(--border);
-    transition: transform 0.2s;
-}
-
-.forecast-item:hover {
-    transform: translateY(-2px);
-    background: rgba(46, 125, 50, 0.12);
-}
-
-/* === Spinner === */
-.spinner {
-    display: inline-block;
-    width: 18px;
-    height: 18px;
-    border: 3px solid rgba(0, 0, 0, 0.12);
-    border-radius: 50%;
-    border-top-color: var(--primary);
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-
-/* === Responsive Layout === */
-@media (max-width: 900px) {
+/* Mobile View */
+@media (max-width: 768px) {
+    /* Stack sidebar below content */
     .grid {
         grid-template-columns: 1fr;
     }
+    
     .sidebar {
-        order: 2;
-        height: auto;
-        position: static;
-        max-height: none;
+        position: relative;
+        top: 0;
     }
-    .container {
-        padding: 16px;
+    
+    /* Single column feature grid */
+    .feature-grid {
+        grid-template-columns: 1fr;
     }
-    .card {
-        padding: 16px;
-        border-radius: 12px;
+    
+    /* Smaller hero section */
+    .hero-section {
+        padding: 1.5rem;
     }
+    
+    .hero-section h2 {
+        font-size: 1.5rem;
+    }
+    
+    /* Reduce header padding */
     header {
-        padding: 14px 16px;
-        font-size: 1.1em;
+        padding: 1rem;
     }
+    
+    header h1 {
+        font-size: 1.4rem;
+    }
+    
+    /* Adjust form padding */
+    form {
+        padding: 1.5rem;
+    }
+    
+    /* Stack form rows */
     .row {
-        flex-direction: column;
-        gap: 12px;
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+    .container {
+        padding: 1rem 0.5rem;
+    }
+    
+    .feature-card {
+        padding: 1rem;
+    }
+    
+    section h2 {
+        font-size: 1.5rem;
+    }
+}
+
+/* ========================================
+   DARK MODE SUPPORT (Optional)
+   Uncomment to enable dark mode
+======================================== */
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background: #1a1a1a;
+        color: #e0e0e0;
+    }
+    
+    .card, .feature-card, form, table {
+        background: #2d2d2d;
+        color: #e0e0e0;
+    }
+    
+    form select, form input[type="file"], #chat-input {
+        background: #1a1a1a;
+        border-color: #444;
+        color: #e0e0e0;
+    }
+    
+    table thead {
+        background: var(--primary-green-dark);
+    }
+    
+    table td {
+        border-bottom-color: #444;
+    }
+}
+
+
+/* ========================================
+   PRINT STYLES (Optional)
+   Styles for printing pages
+======================================== */
+@media print {
+    header, .sidebar, .top-actions, footer {
+        display: none;
+    }
+    
+    .grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .feature-card, .card {
+        box-shadow: none;
+        border: 1px solid #ddd;
     }
 }
