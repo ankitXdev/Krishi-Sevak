@@ -3,14 +3,19 @@ import os
 import logging
 import requests
 from datetime import datetime
+from flask import Flask, request, jsonify
+import requests
 
 app = Flask(__name__)
+
+API_URL = "https://api-inference.huggingface.co/models/meta-llama/Meta-Llama-3-8B-Instruct"
+HEADERS = {"Authorization": "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"}  
 
 # Configuration
 UPLOAD_FOLDER = 'static/images/uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-# Extended CROP_DATA with 20 crops
+# CROP_DATA 
 CROP_DATA = {
     "wheat": {"season": "rabi", "best_state": "Punjab", "water": "450-600mm", "temperature": "10-15°C"},
     "rice": {"season": "kharif", "best_state": "West Bengal", "water": "1000-1500mm", "temperature": "20-35°C"},
@@ -387,16 +392,44 @@ def fertilizer_recommendation():
         "method": "Split application recommended for optimal nutrient uptake and reduced losses"
     })
 
-# AI Chat
-@app.route('/api/chat', methods=['POST'])
+# === AI Chat Route ===
+@app.route("/api/chat", methods=["POST"])
 def ai_chat():
-    data = request.json
-    message = data.get('message', '').lower()
-    if 'weather' in message:
-        reply = "I can provide weather for Agra, Delhi, Mumbai, and more. Use the weather tab!"
-    else:
-        reply = "How can I help with farming today?"
+    data = request.get_json(force=True)
+    user_message = data.get("message", "").strip()
+
+    # Handle empty input
+    if not user_message:
+        return jsonify({"reply": "Please type a message first."}), 400
+
+    # Prepare the input for the model
+    payload = {
+        "inputs": f"User: {user_message}\nAssistant:",
+        "parameters": {"max_new_tokens": 150}
+    }
+
+    try:
+        # Send the request to Hugging Face inference API
+        response = requests.post(API_URL, headers=HEADERS, json=payload, timeout=60)
+        response.raise_for_status()  # raises error if response != 200
+
+        result = response.json()
+
+        # Hugging Face models usually return a list with 'generated_text'
+        if isinstance(result, list) and "generated_text" in result[0]:
+            reply = result[0]["generated_text"].split("Assistant:")[-1].strip()
+        else:
+            reply = "Sorry, I couldn’t generate a response."
+    except requests.exceptions.RequestException as e:
+        reply = f"Network error: {str(e)}"
+    except Exception as e:
+        reply = f"Unexpected error: {str(e)}"
+
     return jsonify({"reply": reply})
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
 
 # Static files
 @app.route('/static/<path:filename>')
